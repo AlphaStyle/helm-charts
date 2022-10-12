@@ -18,8 +18,8 @@ spec:
       port: {{ .port }}
       protocol: TCP
       targetPort: {{ .port }}
-      {{- if .Values.metricsGenerator.appProtocol.grpc }}
-      appProtocol: {{ .Values.metricsGenerator.appProtocol.grpc }}
+      {{- if hasPrefix .name "grpc" }}
+      appProtocol: {{ $.Values.metricsGenerator.appProtocol.grpc }}
       {{- end }}
     {{- end }}
     {{- end }}
