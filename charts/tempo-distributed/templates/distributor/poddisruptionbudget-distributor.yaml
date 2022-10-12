@@ -1,0 +1,13 @@
+{{- if gt (int .Values.distributor.replicas) 1 }}
+apiVersion: {{ include "tempo.pdb.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "tempo.distributorFullname" . }}
+  labels:
+    {{- include "tempo.distributorLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "tempo.distributorSelectorLabels" . | nindent 6 }}
+  maxUnavailable: 1
+{{- end }}

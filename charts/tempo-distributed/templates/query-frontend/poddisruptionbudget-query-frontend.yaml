@@ -1,0 +1,13 @@
+{{- if gt (int .Values.queryFrontend.replicas) 1 }}
+apiVersion: {{ include "tempo.pdb.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "tempo.queryFrontendFullname" . }}
+  labels:
+    {{- include "tempo.queryFrontendLabels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "tempo.queryFrontendSelectorLabels" . | nindent 6 }}
+  maxUnavailable: 1
+{{- end }}
